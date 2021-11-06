@@ -1,0 +1,72 @@
+# Import Required Library
+from tkinter import *
+from tkcalendar import Calendar, DateEntry
+import tkinter as tk
+import pandas as pd
+from babel.dates import datetime_
+from datetime import datetime
+
+
+
+# Create Object
+org_cal = Tk()
+
+# Set geometry
+org_cal.geometry("400x400")
+
+# Add Calendar
+cal = Calendar(org_cal, selectmode = 'day')
+
+cal.pack(pady = 20)
+
+date = Label(org_cal, text = "")
+date.pack(pady = 20)
+
+
+
+
+def but1_event():
+    top = tk.Toplevel(org_cal)
+    text = tk.Label(top,text="日期：").pack(side=tk.LEFT)
+    #calen = DateEntry(top, width=12, background='darkblue', foreground='white', borderwidth=2)
+    calen = Calendar(top, selectmode = 'day')
+    calen.pack(padx=10, pady=10)
+    
+    def date_get():
+        entry_date = calen.get_date()
+        print("get date：",type(entry_date))
+        save_list = entry_date.split("/")
+        
+        def add_event(event_date, event_name):
+            date = cal.datetime(int(save_list[2]), int(save_list[0]), int(save_list[1]))
+            calen.calevent_create(date, event_name)
+            print("event：",date,"event_name：",event_name)
+            
+        add_event(entry_date,'dieeee')
+    
+    
+    mybutton1 = tk.Button(top, text='button', command=date_get)
+    mybutton1.pack()
+    
+    #failure
+    text = tk.Label(top, text="輸入活動：").pack(tk.LEFT)
+    content = tk.Entry(top, bd=5).pack(tk.LEFT)
+    
+    #date_get = cal.get_date()
+    
+
+mybutton = tk.Button(org_cal, text='button', command=but1_event)
+mybutton.pack()
+
+
+
+#with open('D:/activity_save.xlsx',encoding='utf-8') as f:
+    
+
+
+# Execute Tkinter
+org_cal.mainloop()
+'''
+date = date_get()
+add_event(date,'dieeeee')
+'''
